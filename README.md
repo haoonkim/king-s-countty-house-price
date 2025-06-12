@@ -1,90 +1,61 @@
-King County Housing Price Prediction
-This project builds a regression model using TensorFlow and Keras to predict housing prices in King County, Washington, based on features such as square footage, number of bedrooms/bathrooms, year built, and more.
+# King County Housing Price Prediction
 
-Dataset
-File: kc_house_data.csv
+This project implements a deep learning regression model using TensorFlow/Keras to predict housing prices in King County, WA.
 
-Rows: 21,597
+---
 
-Columns: 21
+## Overview
 
-Target Variable: price
+- **Framework**: TensorFlow / Keras  
+- **Model Type**: Fully connected feedforward neural network  
+- **Task**: Supervised regression  
+- **Dataset**: `kc_house_data.csv`  
+- **Input Features**: 19 normalized numerical features  
+- **Target**: House price (USD)
 
-Exploratory Data Analysis (EDA)
-Performed using pandas, matplotlib, and seaborn:
+---
 
-Visualized price distribution and bedroom counts
+## Workflow
 
-Checked for missing values (none found)
+1. Data ingestion and validation using `pandas`
+2. Exploratory data analysis (EDA) using `seaborn` and `matplotlib`
+3. Feature engineering: dropped irrelevant columns, added `year`, `month`
+4. Data normalization with `MinMaxScaler`
+5. Train/test split: 70/30
+6. Model definition and training
+7. Evaluation: MAE, RMSE, explained variance
+8. Inference on single sample
 
-Found top correlations with price:
+---
 
-sqft_living: 0.70
+## Model Details
 
-grade: 0.67
+- **Input**: 19 normalized features  
+- **Architecture**:  
+  - Dense(19) + ReLU  
+  - Dense(19) + ReLU  
+  - Dense(19) + ReLU  
+  - Dense(19) + ReLU  
+  - Dense(1) + ReLU  
+- **Optimizer**: Adam  
+- **Loss**: Mean Squared Error  
+- **Epochs**: 400  
+- **Batch Size**: 128  
 
-sqft_above, sqft_living15, bathrooms
+---
 
-Data Cleaning and Feature Engineering
-Dropped non-informative columns: id, zipcode, date
+## Performance (on Test Set)
 
-Converted date to datetime format and extracted year, month
+- RMSE ≈ 163,452  
+- MAE ≈ 101,088  
+- Explained Variance Score ≈ 0.799
 
-Applied MinMaxScaler to normalize numerical values
+---
 
-Model Architecture
-Framework: TensorFlow/Keras
+## Example Inference
 
-Type: Fully connected neural network
-
-Hidden Layers: 4 layers with ReLU activation
-
-Output Layer: 1 neuron with ReLU activation (for regression)
-
-Optimizer: Adam
-
-Loss Function: Mean Squared Error (MSE)
-
-Epochs: 400
-
-Batch Size: 128
-
-Model Performance
-Root Mean Squared Error (RMSE): ~163,452
-
-Mean Absolute Error (MAE): ~101,088
-
-Explained Variance Score: ~0.799
-
-Training Visualization
-Training and validation loss over epochs was plotted to confirm convergence and generalization.
-
-Example Prediction
-First house in dataset
-
-Actual Price: $221,900
-
-Predicted Price: $289,450
-
-Libraries Used
-pandas
-
-numpy
-
-matplotlib
-
-seaborn
-
-scikit-learn
-
-tensorflow
-
-Conclusion
-The model is capable of predicting housing prices in King County with reasonable accuracy. Potential improvements include:
-
-Hyperparameter tuning
-
-Categorical feature encoding
-
-Using alternative models like XGBoost or Random Forest
-
+```python
+# Single House Prediction
+Input: 19 normalized values
+Output: Predicted price ≈ $289,450  
+Actual: $221,900
